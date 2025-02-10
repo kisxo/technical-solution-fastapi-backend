@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from app.routers import users, products, services
+from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI(
     root_path="/api",
 )
@@ -18,6 +19,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-def read_root():
+@app.get("/", name= "Api Status")
+async def root():
     return {"status":"true", "message": " Technical Solution Api server is running"}
+
+app.include_router(
+    users.router,
+    prefix="/users",
+    tags=["users"],
+)
+
+app.include_router(
+    products.router,
+    prefix="/products",
+    tags=["products"],
+)
+
+app.include_router(
+    services.router,
+    prefix="/services",
+    tags=["services"],
+)
