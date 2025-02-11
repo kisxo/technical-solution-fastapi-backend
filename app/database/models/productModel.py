@@ -3,21 +3,22 @@ from typing import Annotated, List, Optional
 
 PyObjectId = Annotated[str, BeforeValidator(str)]
 
-class ProductCreate(BaseModel):
+class ProductBase(BaseModel):
     name: str = Field(max_length=100)
     price: float
     buy_price: float
     description: str = Field(max_length=500, default=None)
+
+class Product(ProductBase):
+    icon_url: str
+
+class ProductCreate(ProductBase):
     file_id: str | None = None
     bucket_id: str | None = None
 
-class ProductUpdate(BaseModel):
+class ProductUpdate(ProductBase):
     name: str | None = Field(max_length=100, default=None)
     price: float | None = None
     buy_price: float | None = None
-    description: str | None = Field(max_length=500, default=None)
     file_id: str | None = None
     bucket_id: str | None = None
-    name: str | None = None
-    age: int | None = None
-    secret_name: str | None = None
