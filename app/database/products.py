@@ -21,7 +21,7 @@ async def get_product(product_id: str):
     )
     return result
 
-async def create_product(product: productModel.ProductCreate):
+async def create_product(product: productModel.Product):
     try:
         result = databases.create_document(
             database_id = technical_solution_db_id,
