@@ -9,10 +9,10 @@ async def list_products():
 
     return result['documents']
 
-async def get_product(productId: str):
+async def get_product(product_id: str):
     result = databases.get_document(
         database_id = technical_solution_db_id,
         collection_id = products_collection_id,
-        document_id= productId,
+        document_id= product_id,
     )
     return result
