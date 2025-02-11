@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import users, products, services
+from app.routers import users, products, services, files
 from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI(
     root_path="/api",
@@ -36,7 +36,13 @@ app.include_router(
 )
 
 app.include_router(
-    services.router,
-    prefix="/services",
-    tags=["services"],
+    files.router,
+    prefix="/files",
+    tags=["files"],
 )
+
+# app.include_router(
+#     services.router,
+#     prefix="/services",
+#     tags=["services"],
+# )
