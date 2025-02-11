@@ -1,0 +1,1 @@
+technical_solution_bucket_id = '67ab93870005e5e1fd6f'
