@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import users, products, services, files
+from app.routers import users, products, services, files, auth
 from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI(
     root_path="/api",
@@ -27,6 +27,12 @@ app.include_router(
     users.router,
     prefix="/users",
     tags=["users"],
+)
+
+app.include_router(
+    auth.router,
+    prefix="/auth",
+    tags=["auth"],
 )
 
 app.include_router(
