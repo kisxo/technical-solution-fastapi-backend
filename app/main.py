@@ -8,8 +8,8 @@ app = FastAPI(
 origins = [
     "http://localhost:5173",
     "http://localhost:8000",
-    "https://magicminute.online",
-    "https://www.magicminute.online"
+    "https://deolang.magicminute.online",
+    "https://www.deolang.magicminute.online"
 ]
 app.add_middleware(
     CORSMiddleware,
