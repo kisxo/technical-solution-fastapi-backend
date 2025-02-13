@@ -14,12 +14,15 @@ async def list_products():
     return result['documents']
 
 async def get_product(product_id: str):
-    result = databases.get_document(
-        database_id = technical_solution_db_id,
-        collection_id = products_collection_id,
-        document_id= product_id,
-    )
-    return result
+    try:
+        result = databases.get_document(
+            database_id=technical_solution_db_id,
+            collection_id=products_collection_id,
+            document_id=product_id,
+        )
+        return result
+    except AppwriteException as e:
+        raise HTTPException(status_code=400, detail=e.message)
 
 async def create_product(product: productModel.Product):
     try:
@@ -31,5 +34,4 @@ async def create_product(product: productModel.Product):
         )
         return result
     except AppwriteException as e:
-        print(e)
         raise HTTPException(status_code=404, detail=e.message)
