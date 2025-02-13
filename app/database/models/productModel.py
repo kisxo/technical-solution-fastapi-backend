@@ -20,5 +20,11 @@ class ProductUpdate(ProductBase):
     name: str | None = Field(max_length=100, default=None)
     price: float | None = None
     buy_price: float | None = None
+    icon_url: str | None = None
+
+class ProductUpdateInput(ProductBase):
+    name: str | None = Field(max_length=100, default=None)
+    price: float | None = None
+    buy_price: float | None = None
     file_id: str | None = None
     bucket_id: str | None = None
