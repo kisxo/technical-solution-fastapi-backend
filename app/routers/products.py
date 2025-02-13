@@ -38,7 +38,7 @@ async def create_product(
 @router.patch("/{product_id}")
 async def update_product(
     product_id: str,
-    # current_admin_user: Annotated[str, Depends(get_admin_user)],
+    current_admin_user: Annotated[str, Depends(get_admin_user)],
     input_data: productModel.ProductUpdateInput,
 ):
 
