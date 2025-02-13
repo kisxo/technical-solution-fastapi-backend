@@ -29,14 +29,15 @@ async def create_product(
     response.status_code = status.HTTP_201_CREATED
     return {"status": "true", "message": "Product added successfully", "data": created_product}
 
-@router.patch("/{id}")
+@router.patch("/{product_id}")
 async def update_product(
     product_id: str,
-    current_admin_user: Annotated[str, Depends(get_admin_user)],
-    input_data: productModel.ProductUpdate,
+    # current_admin_user: Annotated[str, Depends(get_admin_user)],
+    input_data: productModel.ProductUpdateInput,
 ):
 
-    return {"status": "true", "data": ''}
+    updated_product = await products.update_product(product_id, input_data)
+    return {"status": "true", "data": updated_product}
 
 @router.delete("/{product_id}")
 async def delete_product(
