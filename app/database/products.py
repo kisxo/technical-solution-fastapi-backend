@@ -42,25 +42,36 @@ async def update_product(
         product_id: str,
         input_data: productModel.ProductUpdateInput
 ):
-    old_product = await get_product(product_id)
-    product = productModel.ProductUpdate(**old_product)
-
-    if input_data.name is not None:
-        product.name = input_data.name
-
-    if input_data.price is not None:
-        product.price = input_data.price
-
-    if input_data.buy_price is not None:
-        product.buy_price = input_data.buy_price
-
-    if input_data.description is not None:
-        product.description = input_data.description
-
-    if input_data.bucket_id is not None and input_data.file_id is not None:
-        product.icon_url = f"{settings.Appwrite_API_ENDPOINT}/storage/buckets/{input_data.bucket_id}/files/{input_data.file_id}/view?project={settings.APPWRITE_PROJECT_ID}"
-
     try:
+        old_product = await get_product(product_id)
+
+        product = productModel.ProductUpdate()
+
+        if input_data.name:
+            product.name = input_data.name
+        else:
+            product.name = old_product['name']
+
+        if input_data.price:
+            product.price = input_data.price
+        else:
+            product.price = old_product['price']
+
+        if input_data.buy_price:
+            product.buy_price = input_data.buy_price
+        else:
+            product.buy_price = old_product['buy_price']
+
+        if input_data.description:
+            product.description = input_data.description
+        else:
+            product.description = old_product['description']
+
+        if input_data.bucket_id and input_data.file_id:
+            product.icon_url = f"{settings.Appwrite_API_ENDPOINT}/storage/buckets/{input_data.bucket_id}/files/{input_data.file_id}/view?project={settings.APPWRITE_PROJECT_ID}"
+        else:
+            product.icon_url = old_product['icon_url']
+
         result = databases.update_document(
             database_id = technical_solution_db_id,
             collection_id = products_collection_id,
