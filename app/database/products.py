@@ -10,7 +10,6 @@ async def list_products():
         database_id = technical_solution_db_id,
         collection_id = products_collection_id
     )
-
     return result['documents']
 
 async def get_product(product_id: str):
@@ -22,7 +21,7 @@ async def get_product(product_id: str):
         )
         return result
     except AppwriteException as e:
-        raise HTTPException(status_code=400, detail=e.message)
+        raise HTTPException(status_code=e.code, detail=e.message)
 
 async def create_product(product: productModel.Product):
     try:
@@ -34,4 +33,15 @@ async def create_product(product: productModel.Product):
         )
         return result
     except AppwriteException as e:
-        raise HTTPException(status_code=404, detail=e.message)
+        raise HTTPException(status_code=e.code, detail=e.message)
+
+async def delete_product(product_id: str):
+    try:
+        result = databases.delete_document(
+            database_id = technical_solution_db_id,
+            collection_id = products_collection_id,
+            document_id = product_id
+        )
+        return result
+    except AppwriteException as e:
+        raise HTTPException(status_code=e.code, detail=e.message)

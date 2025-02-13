@@ -38,10 +38,13 @@ async def update_product(
 
     return {"status": "true", "data": ''}
 
-@router.delete("/{id}")
+@router.delete("/{product_id}")
 async def delete_product(
     product_id: str,
     current_admin_user: Annotated[str, Depends(get_admin_user)],
-
+    response: Response
 ):
-    return {"status": "true", "data": await products.list_products()}
+    await products.delete_product(product_id)
+
+    response.status_code = status.HTTP_204_NO_CONTENT
+    return {"status": "true", "message": 'Product deleted successfully'}
