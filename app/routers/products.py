@@ -11,6 +11,12 @@ router = APIRouter()
 async def list_products():
     return {"status": "true", "data": await products.list_products()}
 
+@router.get("/{product_id}")
+async def get_product_detail(
+        product_id: str
+):
+    return {"status": "true", "data": await products.get_product(product_id)}
+
 @router.post("/")
 async def create_product(
     input_data: productModel.ProductCreate,
